@@ -1,0 +1,16 @@
+{
+    "name": "odin-knight-travails",
+    "version": "1.0.0",
+    "description": "Some of the projects for [The Odin Project](https://www.theodinproject.com/), in the javascript syllabus.",
+    "main": "index.js",
+    "scripts": {
+        "start": "ts-node index.ts"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "typescript": "^5.5.3"
+    }
+}
