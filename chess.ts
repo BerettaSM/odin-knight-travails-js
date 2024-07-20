@@ -17,7 +17,13 @@ export abstract class Piece {
         this.lastPosition = config?.lastPosition ?? null;
     }
 
-    abstract move(position: Position): Piece;
+    move(position: Position): Piece {
+        const Constructor = Object.getPrototypeOf(this).constructor;
+        return new Constructor({
+            position,
+            lastPosition: this,
+        });
+    }
 
     abstract getMovimentationOffsets(): Position[];
 
@@ -27,7 +33,7 @@ export abstract class Piece {
     }
 
     toString() {
-        return 'Piece';
+        return this.token;
     }
 }
 
@@ -43,17 +49,6 @@ export class Knight extends Piece {
             [2, -1],
             [1, -2],
         ];
-    }
-
-    move(position: Position): Knight {
-        return new Knight({
-            position,
-            lastPosition: this,
-        });
-    }
-
-    toString() {
-        return 'Knight';
     }
 }
 
