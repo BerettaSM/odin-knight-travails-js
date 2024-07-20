@@ -1,6 +1,6 @@
-import type { Position } from "./types";
+import type { Position } from './types';
 
-import { Piece } from "./chess";
+import { Piece } from './chess';
 
 export function isValidPosition(position: Position) {
     const [x, y] = position;
@@ -15,6 +15,29 @@ export function generateMove(position: Position, offset: Position): Position {
     const [posX, posY] = position;
     const [offsetX, offsetY] = offset;
     return [posX + offsetX, posY + offsetY];
+}
+
+function getPositionDelta([x1, y1]: Position, [x2, y2]: Position) {
+    const deltaX = Math.abs(x1 - x2);
+    const deltaY = Math.abs(y1 - y2);
+    return deltaX + deltaY;
+}
+
+/**
+ * Returns a function that should be passed to
+ * Array.prototype.sort. Will sort an array of
+ * positions according to proximity to a destination
+ * position.
+ *
+ * @param destination
+ * @returns a function to be passed to Array.prototype.sort
+ */
+export function byProximityTo(destination: Position) {
+    return function (a: Position, b: Position): number {
+        const aDelta = getPositionDelta(a, destination);
+        const bDelta = getPositionDelta(b, destination);
+        return aDelta - bDelta;
+    };
 }
 
 export function getValidMoves<P extends Piece>(piece: P) {
