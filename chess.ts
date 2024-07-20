@@ -63,6 +63,16 @@ export class Bishop extends Piece {
     }
 }
 
+export class Rook extends Piece {
+    getMovimentationOffsets(): Position[] {
+        const offsets = range(-7, 8);
+        return offsets.flatMap((offset) => [
+            [offset, 0],
+            [0, offset]
+        ]);
+    }
+}
+
 export function pieceMoves(piece: Piece, to: Position) {
     if (![piece.position, to].every(isValidPosition))
         throw new Error('Invalid board position passed in.');
