@@ -1,6 +1,7 @@
 import type { PieceConfig, Position } from './types';
 
 import { LinkedList } from './linked-list';
+import { range } from './utils';
 import {
     getValidMoves,
     isSamePosition,
@@ -49,6 +50,16 @@ export class Knight extends Piece {
             [2, -1],
             [1, -2],
         ];
+    }
+}
+
+export class Bishop extends Piece {
+    getMovimentationOffsets(): Position[] {
+        const offsets = range(-7, 8);
+        return offsets.flatMap((offset) => [
+            [offset, offset],
+            [offset, offset * -1]
+        ]);
     }
 }
 
