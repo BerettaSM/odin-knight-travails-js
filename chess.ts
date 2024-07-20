@@ -58,7 +58,7 @@ export class Bishop extends Piece {
         const offsets = range(-7, 8);
         return offsets.flatMap((offset) => [
             [offset, offset],
-            [offset, offset * -1]
+            [offset, offset * -1],
         ]);
     }
 }
@@ -68,7 +68,19 @@ export class Rook extends Piece {
         const offsets = range(-7, 8);
         return offsets.flatMap((offset) => [
             [offset, 0],
-            [0, offset]
+            [0, offset],
+        ]);
+    }
+}
+
+export class Queen extends Piece {
+    getMovimentationOffsets(): Position[] {
+        const offsets = range(-7, 8);
+        return offsets.flatMap((offset) => [
+            [offset, offset],
+            [offset, offset * -1],
+            [offset, 0],
+            [0, offset],
         ]);
     }
 }
@@ -83,7 +95,7 @@ export function pieceMoves(piece: Piece, to: Position) {
         if (isSamePosition(move.position, to)) return reconstructPath(move);
         if (visited.has(move.token)) continue;
         visited.add(move.token);
-        getValidMoves(move).forEach((move) => queue.append(move));
+        getValidMoves(move, to).forEach((move) => queue.append(move));
     }
     return null;
 }

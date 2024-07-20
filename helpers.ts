@@ -23,20 +23,28 @@ function getPositionDelta([x1, y1]: Position, [x2, y2]: Position) {
     return deltaX + deltaY;
 }
 
+function comparePositions(a: Position, b: Position, destination: Position) {
+    let aDelta = getPositionDelta(a, destination);
+    let bDelta = getPositionDelta(b, destination);
+    let distance = aDelta - bDelta;
+    if (aDelta === bDelta) distance /= 2;
+    return distance;
+}
+
 /**
  * Returns a function that should be passed to
  * Array.prototype.sort. Will sort an array of
  * positions according to proximity to a destination
- * position.
+ * position and then to origin position.
  *
  * @param destination
  * @returns a function to be passed to Array.prototype.sort
  */
-export function byProximityTo(destination: Position) {
+export function byProximityTo(destination: Position, origin: Position) {
     return function (a: Position, b: Position): number {
-        const aDelta = getPositionDelta(a, destination);
-        const bDelta = getPositionDelta(b, destination);
-        return aDelta - bDelta;
+        const distance = comparePositions(a, b, destination);
+        if (distance !== 0) return distance;
+        return comparePositions(a, b, origin);
     };
 }
 
@@ -53,7 +61,8 @@ export function getValidMoves<P extends Piece>(
     const validPositions = offsets
         .map((offset) => generateMove(piece.position, offset))
         .filter(isValidPosition);
-    if (endPosition) validPositions.sort(byProximityTo(endPosition));
+    if (endPosition)
+        validPositions.sort(byProximityTo(endPosition, piece.position));
     return validPositions.map((pos) => piece.move(pos));
 }
 
