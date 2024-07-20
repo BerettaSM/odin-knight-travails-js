@@ -85,6 +85,21 @@ export class Queen extends Piece {
     }
 }
 
+export class King extends Piece {
+    getMovimentationOffsets(): Position[] {
+        return [
+            [-1, 1],
+            [0, 1],
+            [1, 1],
+            [-1, 0],
+            [1, 0],
+            [-1, -1],
+            [0, -1],
+            [1, -1],
+        ];
+    }
+}
+
 export function pieceMoves(piece: Piece, to: Position) {
     if (![piece.position, to].every(isValidPosition))
         throw new Error('Invalid board position passed in.');

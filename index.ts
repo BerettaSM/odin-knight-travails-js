@@ -1,13 +1,14 @@
 import type { PieceConstructor } from './types';
 
-import { Bishop, Knight, pieceMoves, Queen, Rook } from './chess';
+import { Bishop, King, Knight, pieceMoves, Queen, Rook } from './chess';
 import { getRandomPosition } from './utils';
 
 const pieces: Record<string, PieceConstructor> = {
     Knight,
     Bishop,
     Rook,
-    Queen
+    Queen,
+    King
 };
 
 for (const [name, ChessPiece] of Object.entries(pieces)) {
