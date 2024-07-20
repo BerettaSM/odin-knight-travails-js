@@ -1,9 +1,10 @@
 import type { PieceConstructor } from './types';
-import { Knight, pieceMoves } from './chess';
+import { Bishop, Knight, pieceMoves } from './chess';
 import { getRandomPosition } from './utils';
 
 const pieces: Record<string, PieceConstructor> = {
     Knight,
+    Bishop,
 };
 
 for (const [name, ChessPiece] of Object.entries(pieces)) {
@@ -17,5 +18,5 @@ for (const [name, ChessPiece] of Object.entries(pieces)) {
 
     const piece = new ChessPiece({ position: from });
 
-    console.log('\t', pieceMoves(piece, to), '\n');
+    console.log('\t', pieceMoves(piece, to) ?? 'Impossible move!', '\n');
 }
