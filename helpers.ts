@@ -40,12 +40,21 @@ export function byProximityTo(destination: Position) {
     };
 }
 
-export function getValidMoves<P extends Piece>(piece: P) {
+export function getValidMoves<P extends Piece>(piece: P): Piece[];
+export function getValidMoves<P extends Piece>(
+    piece: P,
+    endPosition: Position
+): Piece[];
+export function getValidMoves<P extends Piece>(
+    piece: P,
+    endPosition?: Position
+): Piece[] {
     const offsets = piece.getMovimentationOffsets();
-    return offsets
+    const validPositions = offsets
         .map((offset) => generateMove(piece.position, offset))
-        .filter(isValidPosition)
-        .map((pos) => piece.move(pos));
+        .filter(isValidPosition);
+    if (endPosition) validPositions.sort(byProximityTo(endPosition));
+    return validPositions.map((pos) => piece.move(pos));
 }
 
 export function reconstructPath<P extends Piece>(piece: P): Position[] {
